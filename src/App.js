@@ -1,12 +1,48 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize.min.js';
+import Todos from './components/Todos';
+import AddTodo from './components/AddTodo';
 
-function App() {
-  return (
-    <div className="App">
+class App extends Component {
+  state = {
+    todos: [
+      {id: 1, content: 'buy some milk'},
+      {id: 2, content: 'buy some moooore milk'}
+    ]
+  }
 
-    </div>
-  );
+  deleteTodo = (id) => {
+    const todos = this.state.todos.filter(todo => {
+      return todo.id !== id; 
+    });
+
+    this.setState({
+      todos: todos
+    })
+  }
+
+  addTodo = (todo) => {
+    todo.id = Math.random();
+    let todos = [...this.state.todos, todo];
+    this.setState({
+      todos: todos
+    })
+
+
+  }
+
+  render() {
+    return (
+      <div className="Todo-app container">
+        <h1 className="center blue-text">Todos</h1>
+        <Todos todos={this.state.todos} deleteTodo={this.deleteTodo}/>
+        <AddTodo addTodo={this.addTodo}/>
+      </div>
+    );
+  }
+
 }
 
 export default App;
